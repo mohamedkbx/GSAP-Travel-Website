@@ -50,6 +50,7 @@ function animateSlides() {
 
 let mouse = document.querySelector(".cursor");
 let mouseTxt = mouse.querySelector("span");
+let burger = document.querySelector(".burger");
 
 function cursor(e) {
   mouse.style.top = e.pageY + "px";
@@ -73,6 +74,25 @@ function activeCursor(e) {
   }
 }
 
+function navToggle(e) {
+  if (!e.target.classList.contains("active")) {
+    e.target.classList.add("active");
+    gsap.to(".line1", { rotate: "-135deg", y: 5, backgroundColor: "black" });
+    gsap.to(".line2", { rotate: "135deg", y: -5, backgroundColor: "black" });
+    gsap.to("#logo", 1, { color: "black" });
+    gsap.to(".nav-bar", 1, { clipPath: "circle(2500px at 100% -10%)" });
+    document.body.classList.add("hide");
+  } else {
+    e.target.classList.remove("active");
+    gsap.to(".line1", { rotate: "0deg", y: 0, backgroundColor: "white" });
+    gsap.to(".line2", { rotate: "0deg", y: 0, backgroundColor: "white" });
+    gsap.to("#logo", 1, { color: "white" });
+    gsap.to(".nav-bar", 1, { clipPath: "circle(50px at 100% -10%)" });
+    document.body.classList.remove("hide");
+  }
+}
+//event listeners
+burger.addEventListener("click", navToggle);
 window.addEventListener("mousemove", cursor);
 window.addEventListener("mouseover", activeCursor);
 
