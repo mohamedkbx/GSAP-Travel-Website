@@ -14,6 +14,7 @@ body {
 #logo {
   color: white;
   font-family: "Abril Fatface";
+  z-index: 2;
 }
 
 .nav-header {
@@ -25,6 +26,8 @@ body {
   color: white;
   width: 80%;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .line1,
