@@ -29,6 +29,9 @@ body {
   position: relative;
   z-index: 2;
 }
+.burger {
+  cursor: pointer;
+}
 
 .line1,
 .line2 {
