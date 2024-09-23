@@ -1,6 +1,7 @@
 let controller;
 let slideScene;
 let pageScene;
+let detailScene;
 function animateSlides() {
   //init controller
   controller = new ScrollMagic.Controller();
@@ -26,7 +27,7 @@ function animateSlides() {
       reverse: false,
     })
       .setTween(slideT1)
-      .addIndicators({ colorStart: "white", colorTrigger: "white", name: "slide" })
+      // .addIndicators({ colorStart: "white", colorTrigger: "white", name: "slide" })
       .addTo(controller);
     //add new Animation
     const pageT1 = gsap.timeline();
@@ -41,8 +42,8 @@ function animateSlides() {
     })
       .setPin(slide, { pushFollowers: false })
       .setTween(pageT1)
-      .addTo(controller)
-      .addIndicators({ colorStart: "white", colorTrigger: "white", name: "page", indent: 200 });
+      .addTo(controller);
+    // .addIndicators({ colorStart: "white", colorTrigger: "white", name: "page", indent: 200 });
   });
 }
 
@@ -111,7 +112,12 @@ barba.init({
       namespace: "fashion",
       beforeEnter() {
         logo.href = "../index.html";
+        detailAnimation();
         gsap.fromTo(".nav-header", { y: "100%" }, { y: "0%", ease: "power2.inOut" });
+      },
+      beforeLeave() {
+        controller.destroy();
+        detailScene.destroy();
       },
     },
   ],
@@ -138,6 +144,28 @@ barba.init({
     },
   ],
 });
+// Detail Animation
+function detailAnimation() {
+  controller = new ScrollMagic.Controller();
+  const slides = document.querySelectorAll(".detail-slide");
+  slides.forEach((slide, index, slides) => {
+    const slideT1 = gsap.timeline({ defaults: { duration: 1 } });
+    let nextSlide = slides.length - 1 === index ? "end" : slides[index + 1];
+    const nextImg = nextSlide.querySelector("img");
+    slideT1.fromTo(slide, { opacity: "1" }, { opacity: "0" });
+    slideT1.fromTo(nextSlide, { opacity: "0" }, { opacity: "1" }, "-=0.1");
+    slideT1.fromTo(nextImg, { x: "40%" }, { x: "0%" });
+    //scene
+    detailScene = new ScrollMagic.Scene({
+      triggerElement: slide,
+      duration: "100%",
+      triggerHook: 0,
+    })
+      .setTween(slideT1)
+      .setPin(slide, { pushFollowers: false })
+      .addTo(controller);
+  });
+}
 //event listeners
 burger.addEventListener("click", navToggle);
 window.addEventListener("mousemove", cursor);
