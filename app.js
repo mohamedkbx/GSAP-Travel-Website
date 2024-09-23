@@ -91,9 +91,54 @@ function navToggle(e) {
     document.body.classList.remove("hide");
   }
 }
+// barba page Transition
+const logo = document.querySelector("#logo");
+barba.init({
+  views: [
+    {
+      namespace: "home",
+      beforeEnter() {
+        animateSlides();
+        logo.href = "./index.html";
+      },
+      beforeLeave() {
+        controller.destroy();
+        slideScene.destroy();
+        pageScene.destroy();
+      },
+    },
+    {
+      namespace: "fashion",
+      beforeEnter() {
+        logo.href = "../index.html";
+        gsap.fromTo(".nav-header", { y: "100%" }, { y: "0%", ease: "power2.inOut" });
+      },
+    },
+  ],
+  transitions: [
+    {
+      leave({ current, next }) {
+        let done = this.async();
+        //animation
+        const t1 = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+        t1.fromTo(current.container, 1, { opacity: "1" }, { opacity: "0" });
+        t1.fromTo(".swipe", 0.75, { x: "-100%" }, { x: "0%", onComplete: done }, "-=0.5");
+      },
+      enter({ current, next }) {
+        let done = this.async();
+        //scroll to the top
+        window.scrollTo(0, 0);
+        //animation
+        const t1 = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+        t1.fromTo(".swipe", 0.75, { x: "0%" }, { x: "100%", stagger: 0.25, onComplete: done });
+
+        t1.fromTo(next.container, 1, { opacity: "0" }, { opacity: "1" });
+        // create your amazing enter animation here
+      },
+    },
+  ],
+});
 //event listeners
 burger.addEventListener("click", navToggle);
 window.addEventListener("mousemove", cursor);
 window.addEventListener("mouseover", activeCursor);
-
-animateSlides();

@@ -10,6 +10,10 @@ body {
   font-family: "Montserrat", sans-serif;
   background-color: #17181a;
   overflow-x: hidden;
+  position: relative;
+}
+main {
+  position: absolute;
 }
 #logo {
   color: white;
@@ -287,4 +291,26 @@ body.hide {
   bottom: 1%;
   border: white;
   opacity: 0.5;
+}
+
+.swipe {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.swipe1 {
+  background-color: rgb(167, 110, 231);
+  z-index: 5;
+}
+.swipe2 {
+  background-color: rgb(255, 139, 39);
+  z-index: 4;
+}
+.swipe3 {
+  background-color: rgb(86, 124, 228);
+  z-index: 3;
 }
