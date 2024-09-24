@@ -19,7 +19,6 @@ function animateSlides() {
     slideT1.to(revelImg, { x: "100%" });
     slideT1.fromTo(img, { scale: 2 }, { scale: 1 }, "-=1");
     slideT1.fromTo(revelText, { x: "0%" }, { x: "100%" }, "-=0.70");
-    slideT1.fromTo(nav, { y: "-100%" }, { y: "0%" }, "-=0.4");
     //create scence
     slideScene = new ScrollMagic.Scene({
       triggerElement: slide,
@@ -113,7 +112,6 @@ barba.init({
       beforeEnter() {
         logo.href = "../index.html";
         detailAnimation();
-        gsap.fromTo(".nav-header", { y: "100%" }, { y: "0%", ease: "power2.inOut" });
       },
       beforeLeave() {
         controller.destroy();
@@ -140,6 +138,7 @@ barba.init({
 
         t1.fromTo(next.container, 1, { opacity: "0" }, { opacity: "1" });
         // create your amazing enter animation here
+        t1.fromTo(".nav-header", { y: "-100%" }, { y: "0%", ease: "power2.inOut" }, "-=1.1");
       },
     },
   ],
